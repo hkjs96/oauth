@@ -1,11 +1,10 @@
-package com.example.oauth.member.service;
+package com.example.oauth.domain.oauth.service;
 
-import com.example.oauth.member.dto.AccessTokenDto;
-import com.example.oauth.member.dto.KakaoProfileDto;
+import com.example.oauth.domain.oauth.dto.AccessTokenDto;
+import com.example.oauth.domain.oauth.dto.KakaoProfileDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.header.Header;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;

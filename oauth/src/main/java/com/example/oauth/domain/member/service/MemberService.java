@@ -1,11 +1,11 @@
-package com.example.oauth.member.service;
+package com.example.oauth.domain.member.service;
 
-import com.example.oauth.member.domain.Member;
-import com.example.oauth.member.domain.SocialType;
-import com.example.oauth.member.dto.MemberCreateDto;
-import com.example.oauth.member.dto.MemberLoginDto;
-import com.example.oauth.member.repository.MemberRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.example.oauth.domain.member.entity.Member;
+import com.example.oauth.domain.member.entity.SocialType;
+import com.example.oauth.domain.member.dto.MemberCreateDto;
+import com.example.oauth.domain.member.dto.MemberLoginDto;
+import com.example.oauth.domain.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +14,11 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MemberService {
+
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
-        this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public Member create(MemberCreateDto memberCreateDto) {
         Member member = Member.builder()

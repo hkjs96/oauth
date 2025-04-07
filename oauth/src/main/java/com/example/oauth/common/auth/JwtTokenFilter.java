@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,35 +25,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenFilter extends GenericFilter {
 
-    @Value("${jwt.secret}")
-    private String secretKey;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String token = request.getHeader("Authorizations");
+        String bearerToken = request.getHeader("Authorization");
+
 
         // https://github.com/jwtk/jjwt?tab=readme-ov-file#constant-parsing-key
         // https://github.com/jwtk/jjwt?tab=readme-ov-file#signing-key
         try {
-            if(token != null) {
-                if(!token.startsWith("Bearer ")){
+            if(bearerToken != null) {
+                if(!bearerToken.startsWith("Bearer ")){
                     throw new AuthenticationException("Bearer 형식 아닙니다.");
                 }
-                String jwtToken = token.substring(0, 7);
+                String jwtToken = bearerToken.substring(7);
 
                 Claims claims = Jwts.parser()
-                        .verifyWith(Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey)))
+                        .verifyWith(jwtTokenProvider.getSecretKey())
                         .build()
                         .parseSignedClaims(jwtToken)
                         .getPayload();
 
+                String role = (String) claims.get("role");
+                String email = claims.getSubject();
+
                 List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority("ROLE_"+claims.get("role")));
-                UserDetails userDetails = new User(claims.getSubject(), "" , authorities);
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+                UserDetails userDetails = new User(email, "" , authorities);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, jwtToken, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

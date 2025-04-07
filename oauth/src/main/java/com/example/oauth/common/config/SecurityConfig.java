@@ -40,8 +40,9 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             // 특정 url 패턴에 대해서는 인증(Authentication 객체 생성) 제외
                 .authorizeHttpRequests(
-                        a -> a.requestMatchers("/member/create", "/member/doLogin",
-                                        "/member/google/doLogin", "/member/kakao/doLogin")
+                        a -> a.requestMatchers("/auth/signup", "/auth/login",
+                                        "/oauth/google/login", "/oauth/kakao/login",
+                                        "/auth/token/refresh")
                         .permitAll().anyRequest().authenticated())
             // UsernamePasswordAuthenticationFilter 이 클래스에서 폼 로그인 인증을 처리
             // 따라서 UsernamePasswordAuthenticationFilter 가 동작하기 전에 jwtTokenFilter 필터에서 검증하겠다.
@@ -62,4 +63,10 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
 }

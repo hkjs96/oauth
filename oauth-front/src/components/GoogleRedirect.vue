@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         async sendCodeToServer(code) {
-            const response = await axios.post("http://localhost:8080/member/google/doLogin", {code});
+            const response = await axios.post("http://localhost:8080/oauth/google/login", {code});
             const token = response.data.token
             localStorage.setItem("token", token);
             window.location.href = "/";

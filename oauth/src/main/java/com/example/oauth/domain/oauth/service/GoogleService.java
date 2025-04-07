@@ -1,7 +1,7 @@
-package com.example.oauth.member.service;
+package com.example.oauth.domain.oauth.service;
 
-import com.example.oauth.member.dto.AccessTokenDto;
-import com.example.oauth.member.dto.GoogleProfileDto;
+import com.example.oauth.domain.oauth.dto.AccessTokenDto;
+import com.example.oauth.domain.oauth.dto.GoogleProfileDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

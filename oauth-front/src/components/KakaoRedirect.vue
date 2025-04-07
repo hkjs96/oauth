@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         async sendCodeToServer(code) {
-            const response = await axios.post("http://localhost:8080/member/kakao/doLogin", {code});
+            const response = await axios.post("http://localhost:8080/oauth/kakao/login", {code});
             const token = response.data.token
             localStorage.setItem("token", token);
             window.location.href = "/";

@@ -44,7 +44,7 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            await axios.post("http://localhost:8080/member/create", registerData);
+            await axios.post("http://localhost:8080/auth/signup", registerData);
             window.location.href = "/";
         }
     }

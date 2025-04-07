@@ -1,4 +1,4 @@
-package com.example.oauth.member.dto;
+package com.example.oauth.domain.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberCreateDto {
+public class MemberLoginDto {
     private String email;
     private String password;
 }
