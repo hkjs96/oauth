@@ -1,5 +1,5 @@
 ## 프로젝트 개요
-Spring Boot 기반 OAuth 인증 및 JWT 토큰 발급 시스템입니다.
+Spring Boot 기반 OAuth 인증 및 JWT 토큰 발급 강의를 기반으로 학습한 내역을 재구성 및 Refresh Token 부분을 추가했습니다.
 - 소셜 로그인(Kakao, Google) 지원
 - 자체 회원가입/로그인
 - Access/Refresh Token 발급 및 Redis 저장
